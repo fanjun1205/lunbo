@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<div style="width:200px;height:300px;background-color:red;" id="div"></div>
+	<input type="button" value="变" onclick="bian()" />
+	
+	<script>
+		//多维数组---改为一维数组
+//		var arr1=[1,2,[3,4,[5,2]],[9,[18,[3,5,3]]],{"q":"a"}]
+//		var arr2=[];  //接收新数组，最终输出的一维数组
+////		document.write(arr1[5])
+//		function change(arr1){
+//			//遍历数组，判断后递归
+//			for(var i=0;i<arr1.length;i++){
+//				if(!Array.isArray(arr1[i])){
+//					arr2.push(arr1[i]);   //不是数组就放入arr2中
+//				}else{
+//					change(arr1[i]);	//递归
+//				}
+//			}
+//			return arr2;
+//		}
+//		document.write(change(arr1));
+		function col(){
+			var n;
+			var m=[0,"A","B","C","D","E","F"];
+			n=m[parseInt(Math.random()*7)];
+			return n;
+		}
+		function bian(){
+			var d=document.getElementById('div');
+			var s="#"+col()+col()+col()+col()+col()+col();
+			//document.write(s);
+			d.style.backgroundColor=s;
+		}
+		
+
+		
+	</script>
+</body>
+</html>

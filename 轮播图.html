@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+		*{margin: 0;padding: 0;}
+		#container{width:500px;height:420px;overflow: hidden;border: 3px solid red;margin-top: 20px;margin-left:300px;position: relative;}
+		#box{width:3500px;height:420px;position: absolute;z-index: 1;}
+		#box img{width:500px;height:420px;float:left ;}
+		#small{width:100px;height:10px;z-index: 2;position: absolute;left: 210px;top:370px;}
+		#small span{width:10px;height:10px;border: 2px solid #fff;display: inline-block;float: left;margin-left:6px ;border-radius: 50%;background: #666;cursor: pointer;}
+		#small .on{background: orangered;}
+		.arrow{width:40px;height:44px;font-size: 40px;display: none;position: absolute;top:200px;z-index: 3;text-align: center;background: #666666;line-height: 40px;text-decoration: none;background-color: rgba(0,0,0,.3);}
+		#container:hover .arrow{display: block;}
+		.arrow:hover{background-color: rgba(0,0,0,.5);}
+		#prev{left: 20px;}
+		#next{right:20px;}
+		</style>
+	</head>
+	<body>
+	<div id="container">
+		<div id="box" style="left:-500px;">
+			<img src="images/05.jpg"/>
+			<img src="images/01.jpg"/>
+			<img src="images/02.jpg"/>
+			<img src="images/03.jpg"/>
+			<img src="images/04.jpg"/>
+			<img src="images/05.jpg"/>
+			<img src="images/01.jpg"/>
+		</div>	
+		<div id="small">
+			<span index="1" class="on"></span>
+			<span index="2"></span>
+			<span index="3"></span>
+			<span index="4"></span>
+			<span index="5"></span>
+			
+		</div>
+		<p id="prev" class="arrow">&lt;</p>
+		<p id="next" class="arrow">&gt;</p>
+	</div>	
+	</body>
+	<script type="text/javascript">
+		var box=document.getElementById("box");
+		var small=document.getElementById("small");
+		var prve=document.getElementById("prve");
+		var next=document.getElementById("next");
+		//自定义animate，移动图片位置，实现左右翻动图片功能
+		function animate(offset){
+		 	//获取style.left,相对左边距离，带px，且为字符串类型
+		 	var newleft=parseInt(box.style.left)+offset;
+		 	if(newleft<-2500){
+		 		box.style.left=-500+"px";
+		 	}else if(newleft>-500){
+		 		box.style.left=-2500+"px";
+		 	}else{
+		 		box.style.left=newleft+"px";
+		 	}
+		 	
+		 	console.log(newleft);
+		}
+		//小原点功能
+		var buttons=document.getElementById("small").getElementsByTagName("span")
+		var index=1;
+		//小圆点颜色
+		function show(){
+			for(var i=0;i<buttons.length;i++){
+				if(buttons[i].className="on"){
+					buttons[i].className=""
+				}
+			}
+			//index=1;从0开始
+			buttons[index-1].className="on"
+		}
+		
+		prev.onclick=function(){
+			index-=1;
+			animate(500);
+			if(index<1){
+				index=5;
+			}
+			show();
+			console.log(index)	
+		}
+		next.onclick=function(){
+			index+=1;
+			animate(-500);
+			if(index>5){
+				index=1;
+			}
+			show();
+			//console.log(index)
+		}
+		
+		//定时器，自动刷新图片
+		var timer;
+		function play(){
+			timer=setInterval(function(){
+				next.onclick()
+			},1500)
+		}
+		play();
+		//停止
+		function stop(){
+			clearInterval(timer);
+		}
+		container.onmouseover=stop;
+		container.onmouseout=play;
+		
+		//点击小圆点
+		for(var i=0;i<buttons.length;i++){
+			buttons[i].onclick=function(){
+				console.log(i);
+				//获取当前的class的index
+				var Thisindex=this.getAttribute("index");
+				console.log(Thisindex);
+				var offsetleft=500*(index-Thisindex);
+				animate(offsetleft);
+				index=Thisindex;
+				show();
+			}
+		}
+
+	</script>
+	
+	
+	
+</html>
